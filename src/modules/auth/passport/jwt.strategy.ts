@@ -1,11 +1,13 @@
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { PassportStrategy } from '@nestjs/passport';
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { jwtConstants } from '../config/secret';
+import { User } from '../../user/interface/user.interface';
+import { AuthService } from '../auth.service';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
-  constructor() {
+  constructor(private readonly authService: AuthService) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(), // 요청에서 JWT 토큰을 추출하는 방법 제공
       ignoreExpiration: false,                                  // 명시적으로 False, JWT 토큰의 기간 만료에 대해 대처하는
@@ -16,8 +18,23 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   // JWT Strategy 는 먼저 JWT Signiture 를 확인 한뒤 , JSON 디코딩을 수행한다.
+  async validate(payload: any, done: Function) {
+    // 토큰을 해석하고 해석 정보 - 유저 이름 , 유저 아이디로 한번더 검색 후 유저 반환
 
-  async validate(payload: any) {
-    return { userId: payload.sub, username: payload.username };
+    console.log('payload.sub', payload);
+    if(!payload){
+      console.log('[JWT PROFILE : Error UnauthorizedException]');
+      return done(new UnauthorizedException('invalid token claims'), false);
+    }
+    
+    /*
+      payload : {
+        thirdPartyId : user Id
+        iat : 백엔드가 토큰을 발급한 epoch 시간
+        exp : 토큰 만료 epoch 시간
+      }
+    */
+    console.log('[JWT PROFILE : Success]');
+    done(null,payload);
   }
 }

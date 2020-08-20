@@ -1,0 +1,15 @@
+import { GoogleConfig } from '../interface/google-config.interface';
+
+export const googleConfig: GoogleConfig = {
+    login_dialog_uri: 'https://accounts.google.com/o/oauth2/auth',
+    client_id: '467774827392-jchg2shfoglvl5hebb8u0drpgfipsg5c.apps.googleusercontent.com',
+    client_secret: 'p2-SIZiIQkdeKSqN5b4Wh0id',
+    oauth_redirect_uri: 'http://localhost:3000/auth/google/callback',
+    access_token_uri: 'https://accounts.google.com/o/oauth2/token',
+    response_type: 'code',
+    scopes: [
+      'https://www.googleapis.com/auth/plus.login',
+      'https://www.googleapis.com/auth/plus.profile.emails.read'
+    ],
+    grant_type: 'authorization_code'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+  };
