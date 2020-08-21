@@ -9,14 +9,13 @@ import { get, post, Response } from 'request';
 
 // social authentication config provider
 import { GoogleConfig } from './interface/google-config.interface';
-import { GOOGLE_CONFIG_TOKEN } from '../../server.config';
+import { GOOGLE_CONFIG_TOKEN , TWITCH_CONFIG_TOKEN } from '../../server.config';
 
 @Injectable()
 export class AuthService {
     private url: string;
 
     constructor(
-        @Inject(GOOGLE_CONFIG_TOKEN) private readonly googleConfig: GoogleConfig,
         private usersService: UserService,
     ) {
         this.url = 'http://localhost:3000';

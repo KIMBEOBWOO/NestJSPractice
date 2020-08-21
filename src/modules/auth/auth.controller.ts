@@ -30,6 +30,17 @@ export class AuthController {
         return 'ok';
     }
 
+    // Twitch Login
+    @Get('twitch')
+    @UseGuards(AuthGuard('twitch-oauth'))
+    async twitchAuth(@Req() req){}
+
+    @Get('twitch/callback')
+    @UseGuards(AuthGuard('twitch-oauth'))
+    async twitchAuthCallback(@Req() req){
+        return 'ok';
+    }
+
     
     // req.user Check - 토큰 유효 검사
     // 사용자 인증 필요 작업 -> 서버 요청 -> 토큰 유효검사 실행 -> 진위값 반환? or 아이디 값 반환

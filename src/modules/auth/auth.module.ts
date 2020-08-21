@@ -17,8 +17,9 @@ import { LocalStrategy } from './passport/local.strategy';
 import { JwtStrategy } from './passport/jwt.strategy';
 // import { GoogleStrategy } from './passport/google-plus.strategy';
 import { GoogleStrategy } from './passport/google-oauth.strategy';
-
+//import { TwitchStrategy } from './passport/twitch.strategy';
 import { authProviders } from './auth.provider';
+import { TwitchOauthStrategy } from './passport/twitch-oauth.strategy';
 
 @Module({
     imports: [
@@ -31,11 +32,17 @@ import { authProviders } from './auth.provider';
         LocalStrategy , 
         JwtStrategy, 
         GoogleStrategy,
+        //TwitchStrategy,
+        TwitchOauthStrategy,
     ],
     controllers: [AuthController],
     exports: [AuthService],
 })
 
-export class AuthModule {
-
+export class AuthModule implements NestModule {
+    public configure(consumer: MiddlewareConsumer) {
+        // consumer
+        //   .apply(authenticate('twitch-oauth', { session: false }))
+        //   .forRoutes('auth/twitch/callback');
+      }
 }
