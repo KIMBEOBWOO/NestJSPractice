@@ -32,7 +32,6 @@ import { TwitchOauthStrategy } from './passport/twitch-oauth.strategy';
         LocalStrategy , 
         JwtStrategy, 
         GoogleStrategy,
-        //TwitchStrategy,
         TwitchOauthStrategy,
     ],
     controllers: [AuthController],
