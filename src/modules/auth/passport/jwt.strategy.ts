@@ -17,24 +17,31 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  // JWT Strategy 는 먼저 JWT Signiture 를 확인 한뒤 , JSON 디코딩을 수행한다.
-  async validate(payload: any, done: Function) {
-    // 토큰을 해석하고 해석 정보 - 유저 이름 , 유저 아이디로 한번더 검색 후 유저 반환
-
-    console.log('payload.sub', payload);
-    if(!payload){
-      console.log('[JWT PROFILE : Error UnauthorizedException]');
-      return done(new UnauthorizedException('invalid token claims'), false);
-    }
-    
-    /*
+  /*
       payload : {
         thirdPartyId : user Id
         iat : 백엔드가 토큰을 발급한 epoch 시간
         exp : 토큰 만료 epoch 시간
       }
     */
-    console.log('[JWT PROFILE : Success]');
-    done(null,payload);
+
+
+  // JWT Strategy 는 먼저 JWT Signiture 를 확인 한뒤 , JSON 디코딩을 수행한다.
+  async validate(payload: any, done: Function , roles: string) {
+    const userRole = payload.roles;
+
+    if(userRole === 'Admin'){
+      console.log('[Admin Login]');
+      return done(null,'admin');
+    }
+    else{
+      if(!payload.sub){
+        console.log('[JWT PROFILE : Error UnauthorizedException]');
+        return done(new UnauthorizedException('invalid token claims'), false);
+      }
+      else{
+        return done(null,payload);
+      }
+    } 
   }
 }

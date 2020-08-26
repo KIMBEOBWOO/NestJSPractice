@@ -1,4 +1,4 @@
-import { GOOGLE_CONFIG_TOKEN, TWITCH_CONFIG_TOKEN } from '../../server.config';
+import { GOOGLE_CONFIG_TOKEN, TWITCH_CONFIG_TOKEN } from '../../server.constant';
 // import { facebookConfig } from './config/facebook-config';
 // import { twitterConfig } from './config/twitter-config';
 import { googleConfig } from './config/google-config';

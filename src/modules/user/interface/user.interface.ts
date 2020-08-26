@@ -1,7 +1,7 @@
 export interface User{
-    userId: number;
-    username: string;
-    password: string;
+    id: string;
+    pw: string;
+    roles: string;
 }
 
 // export interface IUser extends Document {

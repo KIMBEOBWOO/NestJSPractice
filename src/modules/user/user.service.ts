@@ -1,31 +1,34 @@
 import { Injectable } from '@nestjs/common';
+import { UserRepository } from './user.repository';
 import { User } from './interface/user.interface';
-
 @Injectable()
 export class UserService {
-  private readonly users: User[];
+  constructor(private readonly userRepository: UserRepository) {}
 
-  constructor() {
-    this.users = [
-      {
-        userId: 1,
-        username: 'john',
-        password: 'changeme',
-      },
-      {
-        userId: 2,
-        username: 'chris',
-        password: 'secret',
-      },
-      {
-        userId: 3,
-        username: 'maria',
-        password: 'guess',
-      },
-    ];
+  async findOne(id: string): Promise<any | undefined> {
+    const user = await this.userRepository.findOne(id);
+    console.log('[findOne Result ] : ',user);
+    return user;
   }
 
-  async findOne(username: string): Promise<User | undefined> {
-    return this.users.find(user => user.username === username); // return User type or undefined
+  async addOne(user: User){
+    const addUser = await this.userRepository.create();
+    addUser.id = user.id;
+    addUser.pw = user.pw;
+    addUser.roles = user.roles;
+
+    const result = await this.userRepository.save(addUser);
+    console.log('[addOne Result ] : ',result);
+    return result;
+  }
+
+  async findAll(){
+    const result: User[] = await this.userRepository.find();
+    return result;
+  }
+
+  async deleteOneById(id: string){
+    const result = await this.userRepository.delete(id);
+    return result;
   }
 }

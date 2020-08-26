@@ -9,7 +9,7 @@ import { get, post, Response } from 'request';
 
 // social authentication config provider
 import { GoogleConfig } from './interface/google-config.interface';
-import { GOOGLE_CONFIG_TOKEN , TWITCH_CONFIG_TOKEN } from '../../server.config';
+import { GOOGLE_CONFIG_TOKEN , TWITCH_CONFIG_TOKEN } from '../../server.constant';
 
 @Injectable()
 export class AuthService {
@@ -38,9 +38,10 @@ export class AuthService {
         // Case 1 : pakage 'jsonwebtoken'
         const expiresIn: string = '48h';
         const token: string = sign({
-            sub: user.username
+            sub: user.id,
+            roles: 'Admin',
         }, jwtConstants.secret, { expiresIn });
-
+        
         return {
             token
         };
@@ -61,8 +62,8 @@ export class AuthService {
         return { token };    
     }
 
-    async findUserById(username: string): Promise<User>{
-        const user = await this.usersService.findOne(username);
+    async findUserById(id: string): Promise<User>{
+        const user = await this.usersService.findOne(id);
         if(user){
             return user;
         }

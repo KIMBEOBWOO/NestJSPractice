@@ -18,6 +18,9 @@ export class AuthController {
         return await this.authService.createJwtToken(req.user);
     }
 
+    @Post('admin')
+    
+
     // Google Login
     @Get('google')
     @UseGuards(AuthGuard('google'))
